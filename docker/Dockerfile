@@ -1,7 +1,7 @@
-ARG UBUNTU_VERSION
-FROM ubuntu:$UBUNTU_VERSION
+FROM python:latest
 
-RUN apt update && \
-    apt install --assume-yes python3 && \
-    apt install --assume-yes python3-pip && \
-    apt install --assume-yes python3-venv
+COPY ./requirements.txt /app/requirements.txt
+WORKDIR /app
+RUN pip install -r requirements.txt
+COPY . /app
+CMD gunicorn --workers=3 --bind=0.0.0.0:8000 app:app

@@ -2,7 +2,7 @@ services:
   backend:
     build:
       context: ../.
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/DockerfileDev
       args:
         - UBUNTU_VERSION=${UBUNTU_VERSION}
     volumes:
