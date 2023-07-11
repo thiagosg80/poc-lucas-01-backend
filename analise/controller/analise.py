@@ -10,5 +10,6 @@ class AnaliseController(Resource):
         faturamento_periodo = args.get('faturamento-periodo')
         salarios_valor = args.get('valor-salarios')
         pro_labore_valor = args.get('valor-pro-labore')
+        valor_medio_credito_icms = args.get('valor-medio-credito-icms')
 
-        return AnaliseService().get(faturamento_periodo, salarios_valor, pro_labore_valor)
+        return AnaliseService().get(faturamento_periodo, salarios_valor, pro_labore_valor, valor_medio_credito_icms)

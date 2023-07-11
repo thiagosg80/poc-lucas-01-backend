@@ -6,9 +6,11 @@ from analise.service.simples_nacional import SimplesNacionalService
 
 
 class AnaliseService:
-    def get(self, faturamento_periodo, salarios_valor, pro_labore_valor):
+    def get(self, faturamento_periodo, salarios_valor, pro_labore_valor, valor_medio_credito_icms):
         try:
-            input_analise = InputService().get(faturamento_periodo, salarios_valor, pro_labore_valor)
+            input_analise = InputService().get(faturamento_periodo, salarios_valor, pro_labore_valor,
+                                               valor_medio_credito_icms)
+
             return self.__get(input_analise)
         except ValueError:
             return Response('Bad request', status=400)
@@ -31,5 +33,25 @@ class AnaliseService:
                 'inss': simples_nacional.get_inss(),
                 'cargaTributariaAnual': simples_nacional.get_carga_tributaria_anual(),
                 'percentualDosTributos': simples_nacional.get_percentual_dos_tributos()
+            },
+            'lucroPresumido': {
+                'presuncaoIRPJ': {
+                    'aliquota': '',
+                    'montante': ''
+                },
+                'presuncaoCSLL': {
+                    'aliquota': '',
+                    'montante': ''
+                },
+                'irpj': '',
+                'adicionalIRPJ': '',
+                'csll': '',
+                'pis': '',
+                'cofins': '',
+                'icms': '',
+                'inss': '',
+                'valorMedioCreditoICMS': '',
+                'cargaTributariaAnual': '',
+                'percentualDosTributos': ''
             }
         }
