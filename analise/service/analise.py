@@ -2,6 +2,7 @@ from flask import Response
 
 from analise.model import Input
 from analise.service.input import InputService
+from analise.service.lucro_presumido import LucroPresumidoService
 from analise.service.simples_nacional import SimplesNacionalService
 
 
@@ -20,6 +21,10 @@ class AnaliseService:
         valor_salarios = input_analise.get_salarios_valor()
         valor_pro_labore = input_analise.get_pro_labore_valor()
         simples_nacional = SimplesNacionalService().get(faturamento_periodo, valor_salarios, valor_pro_labore)
+        valor_medio_credito_icms = input_analise.get_valor_medio_credito_icms()
+
+        lucro_presumido = LucroPresumidoService().get(faturamento_periodo, valor_salarios, valor_pro_labore,
+                                                      valor_medio_credito_icms)
 
         return {
             'input': {
@@ -36,22 +41,22 @@ class AnaliseService:
             },
             'lucroPresumido': {
                 'presuncaoIRPJ': {
-                    'aliquota': '',
-                    'montante': ''
+                    'aliquota': lucro_presumido.presuncao_irpj.aliquota,
+                    'montante': lucro_presumido.presuncao_irpj.montante
                 },
                 'presuncaoCSLL': {
-                    'aliquota': '',
-                    'montante': ''
+                    'aliquota': lucro_presumido.presuncao_csll.aliquota,
+                    'montante': lucro_presumido.presuncao_csll.montante
                 },
-                'irpj': '',
-                'adicionalIRPJ': '',
-                'csll': '',
-                'pis': '',
-                'cofins': '',
-                'icms': '',
-                'inss': '',
-                'valorMedioCreditoICMS': '',
-                'cargaTributariaAnual': '',
-                'percentualDosTributos': ''
+                'irpj': lucro_presumido.irpj,
+                'adicionalIRPJ': lucro_presumido.adicional_irpj,
+                'csll': lucro_presumido.csll,
+                'pis': lucro_presumido.pis,
+                'cofins': lucro_presumido.cofins,
+                'icms': lucro_presumido.icms,
+                'inss': lucro_presumido.inss,
+                'valorMedioCreditoICMS': lucro_presumido.valor_medio_credito_icms,
+                'cargaTributariaAnual': lucro_presumido.carga_tributaria_anual,
+                'percentualDosTributos': lucro_presumido.percentual_dos_tributos
             }
         }
