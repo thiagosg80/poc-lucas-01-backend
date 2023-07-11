@@ -7,10 +7,12 @@ from analise.service.simples_nacional import SimplesNacionalService
 
 
 class AnaliseService:
-    def get(self, faturamento_periodo, salarios_valor, pro_labore_valor, valor_medio_credito_icms):
+    def get(self, faturamento_periodo, salarios_valor, pro_labore_valor, valor_medio_credito_icms, vendas, compras_mp,
+            despesa_com_folha, outras_despesas, impostos):
         try:
             input_analise = InputService().get(faturamento_periodo, salarios_valor, pro_labore_valor,
-                                               valor_medio_credito_icms)
+                                               valor_medio_credito_icms, vendas, compras_mp, despesa_com_folha,
+                                               outras_despesas, impostos)
 
             return self.__get(input_analise)
         except ValueError:
@@ -26,11 +28,23 @@ class AnaliseService:
         lucro_presumido = LucroPresumidoService().get(faturamento_periodo, valor_salarios, valor_pro_labore,
                                                       valor_medio_credito_icms)
 
+        vendas = input_analise.vendas
+        compras_mp = input_analise.compras_mp
+        despesa_com_folha = input_analise.despesa_com_folha
+        outras_despesas = input_analise.outras_despesas
+        impostos = input_analise.impostos
+
         return {
             'input': {
                 'faturamentoPeriodo': faturamento_periodo,
                 'valorSalarios': valor_salarios,
-                'valorProLabore': valor_pro_labore
+                'valorProLabore': valor_pro_labore,
+                'valorMedioCreditoICMS': valor_medio_credito_icms,
+                'vendas': vendas,
+                'comprasMP': compras_mp,
+                'despesaComFolha': despesa_com_folha,
+                'outrasDespesas': outras_despesas,
+                'impostos': impostos
             },
             'simplesNacional': {
                 'aliquota': simples_nacional.aliquota,
