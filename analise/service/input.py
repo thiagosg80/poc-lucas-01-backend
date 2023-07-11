@@ -10,9 +10,13 @@ class InputService:
             pro_labore_valor = float(pro_labore_valor_input)
             valor_medio_credito_icms = float(valor_medio_credito_icms_input) if valor_medio_credito_icms_input else 0
             self.__check_is_zero(faturamento_periodo, salarios_valor, pro_labore_valor)
+            input_analise = Input()
+            input_analise.faturamento_periodo = faturamento_periodo
+            input_analise.salarios_valor = salarios_valor
+            input_analise.pro_labore_valor = pro_labore_valor
+            input_analise.valor_medio_credito_icms = valor_medio_credito_icms
 
-            return Input(faturamento_periodo=faturamento_periodo, salarios_valor=salarios_valor,
-                         pro_labore_valor=pro_labore_valor, valor_medio_credito_icms=valor_medio_credito_icms)
+            return input_analise
 
         except ValueError as error:
             raise error

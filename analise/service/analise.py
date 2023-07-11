@@ -17,11 +17,11 @@ class AnaliseService:
             return Response('Bad request', status=400)
 
     def __get(self, input_analise: Input):
-        faturamento_periodo = input_analise.get_faturamento_periodo()
-        valor_salarios = input_analise.get_salarios_valor()
-        valor_pro_labore = input_analise.get_pro_labore_valor()
+        faturamento_periodo = input_analise.faturamento_periodo
+        valor_salarios = input_analise.salarios_valor
+        valor_pro_labore = input_analise.pro_labore_valor
         simples_nacional = SimplesNacionalService().get(faturamento_periodo, valor_salarios, valor_pro_labore)
-        valor_medio_credito_icms = input_analise.get_valor_medio_credito_icms()
+        valor_medio_credito_icms = input_analise.valor_medio_credito_icms
 
         lucro_presumido = LucroPresumidoService().get(faturamento_periodo, valor_salarios, valor_pro_labore,
                                                       valor_medio_credito_icms)
@@ -33,11 +33,11 @@ class AnaliseService:
                 'valorProLabore': valor_pro_labore
             },
             'simplesNacional': {
-                'aliquota': simples_nacional.get_aliquota(),
-                'aPagarNoPeriodo': simples_nacional.get_a_pagar_no_periodo(),
-                'inss': simples_nacional.get_inss(),
-                'cargaTributariaAnual': simples_nacional.get_carga_tributaria_anual(),
-                'percentualDosTributos': simples_nacional.get_percentual_dos_tributos()
+                'aliquota': simples_nacional.aliquota,
+                'aPagarNoPeriodo': simples_nacional.a_pagar_no_periodo,
+                'inss': simples_nacional.inss,
+                'cargaTributariaAnual': simples_nacional.carga_tributaria_anual,
+                'percentualDosTributos': simples_nacional.percentual_dos_tributos
             },
             'lucroPresumido': {
                 'presuncaoIRPJ': {
