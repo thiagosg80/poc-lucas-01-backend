@@ -3,16 +3,18 @@ from flask import Response
 from analise.model import Input
 from analise.service.input import InputService
 from analise.service.lucro_presumido import LucroPresumidoService
+from analise.service.lucro_real import LucroRealService
 from analise.service.simples_nacional import SimplesNacionalService
 
 
 class AnaliseService:
     def get(self, faturamento_periodo, salarios_valor, pro_labore_valor, valor_medio_credito_icms, vendas, compras_mp,
-            despesa_com_folha, outras_despesas, impostos):
+            despesa_com_folha, outras_despesas, impostos, valor_medio_credito_pis, valor_medio_credito_cofins):
         try:
             input_analise = InputService().get(faturamento_periodo, salarios_valor, pro_labore_valor,
                                                valor_medio_credito_icms, vendas, compras_mp, despesa_com_folha,
-                                               outras_despesas, impostos)
+                                               outras_despesas, impostos, valor_medio_credito_pis,
+                                               valor_medio_credito_cofins)
 
             return self.__get(input_analise)
         except ValueError:
@@ -33,6 +35,13 @@ class AnaliseService:
         despesa_com_folha = input_analise.despesa_com_folha
         outras_despesas = input_analise.outras_despesas
         impostos = input_analise.impostos
+        valor_medio_credito_pis = input_analise.valor_medio_credito_pis
+        valor_medio_credito_cofins = input_analise.valor_medio_credito_cofins
+
+        lucro_real = LucroRealService().get(faturamento_periodo, vendas, compras_mp, despesa_com_folha,
+                                            outras_despesas, impostos, valor_medio_credito_icms,
+                                            valor_medio_credito_pis, valor_medio_credito_cofins, valor_salarios,
+                                            valor_pro_labore)
 
         return {
             'input': {
@@ -44,7 +53,9 @@ class AnaliseService:
                 'comprasMP': compras_mp,
                 'despesaComFolha': despesa_com_folha,
                 'outrasDespesas': outras_despesas,
-                'impostos': impostos
+                'impostos': impostos,
+                'valorMedioCreditoPIS': valor_medio_credito_pis,
+                'valorMedioCreditoCOFINS': valor_medio_credito_cofins
             },
             'simplesNacional': {
                 'aliquota': simples_nacional.aliquota,
@@ -69,8 +80,19 @@ class AnaliseService:
                 'cofins': lucro_presumido.cofins,
                 'icms': lucro_presumido.icms,
                 'inss': lucro_presumido.inss,
-                'valorMedioCreditoICMS': lucro_presumido.valor_medio_credito_icms,
                 'cargaTributariaAnual': lucro_presumido.carga_tributaria_anual,
                 'percentualDosTributos': lucro_presumido.percentual_dos_tributos
+            },
+            'lucroReal': {
+                'apurado': lucro_real.apurado,
+                'irpj': lucro_real.irpj,
+                'adicionalIRPJ': lucro_real.adicional_irpj,
+                'csll': lucro_real.csll,
+                'pis': lucro_real.pis,
+                'cofins': lucro_real.cofins,
+                'icms': lucro_real.icms,
+                'inss': lucro_real.inss,
+                'cargaTributariaAnual': lucro_real.carga_tributaria_anual,
+                'percentualDosTributos': lucro_real.percentual_dos_tributos
             }
         }

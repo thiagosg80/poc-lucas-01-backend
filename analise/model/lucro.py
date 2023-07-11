@@ -1,0 +1,10 @@
+class Lucro:
+    irpj: float
+    adicional_irpj: float
+    csll: float
+    pis: float
+    cofins: float
+    icms: float
+    inss: float
+    carga_tributaria_anual: float
+    percentual_dos_tributos: float

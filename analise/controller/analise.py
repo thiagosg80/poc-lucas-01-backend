@@ -16,6 +16,9 @@ class AnaliseController(Resource):
         despesa_com_folha = args.get('despesa-com-folha')
         outras_despesas = args.get('outras-despesas')
         impostos = args.get('impostos')
+        valor_medio_credito_pis = args.get('valor-medio-credito-pis')
+        valor_medio_credito_cofins = args.get('valor-medio-credito-cofins')
 
         return AnaliseService().get(faturamento_periodo, salarios_valor, pro_labore_valor, valor_medio_credito_icms,
-                                    vendas, compras_mp, despesa_com_folha, outras_despesas, impostos)
+                                    vendas, compras_mp, despesa_com_folha, outras_despesas, impostos,
+                                    valor_medio_credito_pis, valor_medio_credito_cofins)

@@ -8,3 +8,5 @@ class Input:
     despesa_com_folha: float
     outras_despesas: float
     impostos: float
+    valor_medio_credito_pis: float
+    valor_medio_credito_cofins: float

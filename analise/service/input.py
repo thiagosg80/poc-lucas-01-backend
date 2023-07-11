@@ -4,7 +4,8 @@ from analise.model.Input import Input
 class InputService:
     def get(self, faturamento_periodo_input, salarios_valor_input, pro_labore_valor_input,
             valor_medio_credito_icms_input, vendas_input, compras_mp_input, despesa_com_folha_input,
-            outras_despesas_input, impostos_input) -> Input:
+            outras_despesas_input, impostos_input, valor_medio_credito_pis_input,
+            valor_medio_credito_cofins_input) -> Input:
         try:
             faturamento_periodo = float(faturamento_periodo_input)
             salarios_valor = float(salarios_valor_input)
@@ -22,6 +23,8 @@ class InputService:
             input_analise.despesa_com_folha = self.__get_optional(despesa_com_folha_input)
             input_analise.outras_despesas = self.__get_optional(outras_despesas_input)
             input_analise.impostos = self.__get_optional(impostos_input)
+            input_analise.valor_medio_credito_pis = self.__get_optional(valor_medio_credito_pis_input)
+            input_analise.valor_medio_credito_cofins = self.__get_optional(valor_medio_credito_cofins_input)
 
             return input_analise
 
