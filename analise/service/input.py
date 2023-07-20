@@ -3,26 +3,20 @@ from analise.model.Input import Input
 
 class InputService:
     def get(self, faturamento_periodo_input, salarios_valor_input, pro_labore_valor_input,
-            valor_medio_credito_icms_input, vendas_input, compras_mp_input, despesa_com_folha_input,
-            outras_despesas_input, impostos_input, valor_medio_credito_pis_input,
-            valor_medio_credito_cofins_input) -> Input:
+            valor_medio_credito_icms_input, valor_medio_credito_pis_input, valor_medio_credito_cofins_input,
+            lucro_apurado_input) -> Input:
         try:
             faturamento_periodo = float(faturamento_periodo_input)
             salarios_valor = float(salarios_valor_input)
             pro_labore_valor = float(pro_labore_valor_input)
-            vendas = float(vendas_input)
-            values = [faturamento_periodo, salarios_valor, pro_labore_valor, vendas]
+            values = [faturamento_periodo, pro_labore_valor]
             [self.__check_is_zero(value) for value in values]
             input_analise = Input()
             input_analise.faturamento_periodo = faturamento_periodo
             input_analise.salarios_valor = salarios_valor
             input_analise.pro_labore_valor = pro_labore_valor
             input_analise.valor_medio_credito_icms = self.__get_optional(valor_medio_credito_icms_input)
-            input_analise.vendas = vendas
-            input_analise.compras_mp = self.__get_optional(compras_mp_input)
-            input_analise.despesa_com_folha = self.__get_optional(despesa_com_folha_input)
-            input_analise.outras_despesas = self.__get_optional(outras_despesas_input)
-            input_analise.impostos = self.__get_optional(impostos_input)
+            input_analise.lucro_apurado = float(lucro_apurado_input)
             input_analise.valor_medio_credito_pis = self.__get_optional(valor_medio_credito_pis_input)
             input_analise.valor_medio_credito_cofins = self.__get_optional(valor_medio_credito_cofins_input)
 

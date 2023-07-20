@@ -8,16 +8,15 @@ from analise.model.lucro_real import LucroReal
 
 
 class LucroRealService:
-    def get(self, faturamento_periodo: float, vendas: float, compras_mp: float, despesa_com_folha: float,
-            outras_despesas: float, impostos: float, valor_medio_credito_icms: float, valor_medio_credito_pis: float,
-            valor_medio_credito_cofins: float, salarios_valor: float, pro_labore_valor: float) -> LucroReal:
+    def get(self, faturamento_periodo: float, valor_medio_credito_icms: float, valor_medio_credito_pis: float,
+            valor_medio_credito_cofins: float, salarios_valor: float, pro_labore_valor: float,
+            lucro_apurado: float) -> LucroReal:
 
         lucro_real = LucroReal()
-        apurado = vendas - compras_mp - despesa_com_folha - outras_despesas - impostos
-        lucro_real.apurado = apurado
-        lucro_real.irpj = apurado * PercentualCommon.IRPJ.value
-        lucro_real.adicional_irpj = get_adicional_irpj(apurado)
-        lucro_real.csll = apurado * PercentualCommon.CSLL.value
+        lucro_real.apurado = lucro_apurado
+        lucro_real.irpj = lucro_apurado * PercentualCommon.IRPJ.value
+        lucro_real.adicional_irpj = get_adicional_irpj(lucro_apurado)
+        lucro_real.csll = lucro_apurado * PercentualCommon.CSLL.value
         lucro_real.pis = faturamento_periodo * PercentualLucroReal.PIS.value - valor_medio_credito_pis
         lucro_real.cofins = faturamento_periodo * PercentualLucroReal.COFINS.value - valor_medio_credito_cofins
         lucro_real.icms = get_icms(faturamento_periodo, valor_medio_credito_icms)

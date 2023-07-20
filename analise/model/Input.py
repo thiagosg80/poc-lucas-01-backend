@@ -10,3 +10,4 @@ class Input:
     impostos: float
     valor_medio_credito_pis: float
     valor_medio_credito_cofins: float
+    lucro_apurado: float

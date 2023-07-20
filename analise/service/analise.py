@@ -8,13 +8,12 @@ from analise.service.simples_nacional import SimplesNacionalService
 
 
 class AnaliseService:
-    def get(self, faturamento_periodo, salarios_valor, pro_labore_valor, valor_medio_credito_icms, vendas, compras_mp,
-            despesa_com_folha, outras_despesas, impostos, valor_medio_credito_pis, valor_medio_credito_cofins):
+    def get(self, faturamento_periodo, salarios_valor, pro_labore_valor, valor_medio_credito_icms,
+            valor_medio_credito_pis, valor_medio_credito_cofins, lucro_apurado):
         try:
             input_analise = InputService().get(faturamento_periodo, salarios_valor, pro_labore_valor,
-                                               valor_medio_credito_icms, vendas, compras_mp, despesa_com_folha,
-                                               outras_despesas, impostos, valor_medio_credito_pis,
-                                               valor_medio_credito_cofins)
+                                               valor_medio_credito_icms, valor_medio_credito_pis,
+                                               valor_medio_credito_cofins, lucro_apurado)
 
             return self.__get(input_analise)
         except ValueError:
@@ -30,18 +29,13 @@ class AnaliseService:
         lucro_presumido = LucroPresumidoService().get(faturamento_periodo, valor_salarios, valor_pro_labore,
                                                       valor_medio_credito_icms)
 
-        vendas = input_analise.vendas
-        compras_mp = input_analise.compras_mp
-        despesa_com_folha = input_analise.despesa_com_folha
-        outras_despesas = input_analise.outras_despesas
-        impostos = input_analise.impostos
         valor_medio_credito_pis = input_analise.valor_medio_credito_pis
         valor_medio_credito_cofins = input_analise.valor_medio_credito_cofins
+        lucro_apurado = input_analise.lucro_apurado
 
-        lucro_real = LucroRealService().get(faturamento_periodo, vendas, compras_mp, despesa_com_folha,
-                                            outras_despesas, impostos, valor_medio_credito_icms,
-                                            valor_medio_credito_pis, valor_medio_credito_cofins, valor_salarios,
-                                            valor_pro_labore)
+        lucro_real = LucroRealService().get(faturamento_periodo, valor_medio_credito_icms, valor_medio_credito_pis,
+                                            valor_medio_credito_cofins, valor_salarios, valor_pro_labore,
+                                            lucro_apurado)
 
         return {
             'input': {
@@ -49,11 +43,6 @@ class AnaliseService:
                 'valorSalarios': valor_salarios,
                 'valorProLabore': valor_pro_labore,
                 'valorMedioCreditoICMS': valor_medio_credito_icms,
-                'vendas': vendas,
-                'comprasMP': compras_mp,
-                'despesaComFolha': despesa_com_folha,
-                'outrasDespesas': outras_despesas,
-                'impostos': impostos,
                 'valorMedioCreditoPIS': valor_medio_credito_pis,
                 'valorMedioCreditoCOFINS': valor_medio_credito_cofins
             },
