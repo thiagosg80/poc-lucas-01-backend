@@ -1,5 +1,5 @@
 class SimplesNacional:
-    aliquota: float
+    encaixes: list
     a_pagar_no_periodo: float
     inss: float
     carga_tributaria_anual: float

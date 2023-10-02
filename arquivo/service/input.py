@@ -2,7 +2,8 @@ from analise.model.Input import Input
 
 from arquivo.service.faturamento_periodo_value import FaturamentoPeriodoValueService
 from arquivo.service.lucro_apurado_value import LucroApuradoValueService
-from arquivo.service.pro_labore_value_service import ProLaboreValueService
+from arquivo.service.periodo_value import PeriodoValueService
+from arquivo.service.pro_labore_value import ProLaboreValueService
 
 
 class InputService:
@@ -20,5 +21,6 @@ class InputService:
         input_analise.valor_medio_credito_pis = 0
         input_analise.valor_medio_credito_cofins = 0
         input_analise.lucro_apurado = LucroApuradoValueService().get(text)
+        input_analise.periodo = PeriodoValueService().get(text)
 
         return input_analise

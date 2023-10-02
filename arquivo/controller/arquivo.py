@@ -2,6 +2,7 @@ from PyPDF2 import PdfReader
 from flask import request
 from flask_restful import Resource
 
+from analise.function.datetime_to_date_br import get_date_br
 from analise.model.Input import Input
 from arquivo.function.get_text import get_text
 from arquivo.service.cliente_identificacao import ClienteIdentificacaoService
@@ -53,5 +54,9 @@ class ArquivoController(Resource):
             'despesa_com_folha': input_analise.despesa_com_folha,
             'outras_despesas': input_analise.outras_despesas,
             'impostos': input_analise.impostos,
-            'lucro_apurado': input_analise.lucro_apurado
+            'lucro_apurado': input_analise.lucro_apurado,
+            'periodo': {
+                'inicio': get_date_br(input_analise.periodo.inicio),
+                'fim': get_date_br(input_analise.periodo.fim)
+            }
         }

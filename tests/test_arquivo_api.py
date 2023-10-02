@@ -1,6 +1,4 @@
-from pathlib import Path
-
-resources = Path(__file__).parent / 'resources'
+from tests.perform_upload import perform_upload
 
 
 def test_upload_cnpj(client):
@@ -40,13 +38,4 @@ def test_upload_cnpj_atividades_secundarias(client):
 
 
 def __perform_upload_cnpj(client):
-    url = '/arquivos/upload'
-    file_bytes = (resources / 'CNPJSimple.pdf').open('rb')
-
-    request_body = {
-        'file': file_bytes
-    }
-
-    response = client.post(url, data=request_body)
-
-    return response.json
+    return perform_upload(client, '/arquivos/upload', 'CNPJSimple.pdf')

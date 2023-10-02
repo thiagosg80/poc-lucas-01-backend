@@ -1,3 +1,6 @@
+from analise.model.periodo_apuracao import PeriodoApuracao
+
+
 class Input:
     faturamento_periodo: float
     salarios_valor: float
@@ -11,3 +14,5 @@ class Input:
     valor_medio_credito_pis: float
     valor_medio_credito_cofins: float
     lucro_apurado: float
+    cnaes: str
+    periodo: PeriodoApuracao
