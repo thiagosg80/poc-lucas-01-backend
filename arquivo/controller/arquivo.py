@@ -6,6 +6,7 @@ from analise.model.Input import Input
 from arquivo.function.get_text import get_text
 from arquivo.service.cliente_identificacao import ClienteIdentificacaoService
 from arquivo.service.input import InputService
+from cliente_identificacao.model.atividade import Atividade
 from cliente_identificacao.model.identificacao import Identificacao
 
 
@@ -23,11 +24,20 @@ class ArquivoController(Resource):
         }
 
     def __get_identificacao(self, identificacao: Identificacao):
+        atividades_secundarias = list(map(self.__get_atividade_json, identificacao.atividades_secundarias))
+
         return {
             'cnpj': identificacao.cnpj,
             'nome_fantasia': identificacao.nome_fantasia,
-            'atividade_principal': identificacao.atividade_principal,
+            'atividade_principal': self.__get_atividade_json(identificacao.atividade_principal),
+            'atividades_secundarias': atividades_secundarias,
             'data_abertura': identificacao.data_abertura
+        }
+
+    def __get_atividade_json(self, atividade_input: Atividade):
+        return {
+            'cnae': atividade_input.cnae,
+            'descricao': atividade_input.descricao
         }
 
     def __get_input_analise(self, input_analise: Input):
