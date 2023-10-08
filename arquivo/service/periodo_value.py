@@ -24,7 +24,7 @@ class PeriodoValueService:
 
     def __get_empty_periodo(self) -> PeriodoApuracao:
         periodo = PeriodoApuracao()
-        periodo.inicio = get_datetime('00/00/0000')
-        periodo.fim = get_datetime('00/00/0000')
+        periodo.inicio = get_datetime('01/01/0001')
+        periodo.fim = get_datetime('01/01/0001')
 
         return periodo
